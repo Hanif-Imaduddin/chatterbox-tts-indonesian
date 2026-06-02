@@ -1,0 +1,19 @@
+build:
+  python_version: "3.11"
+  gpu: true
+  cuda: "11.8"
+  python_packages:
+    - torch==2.1.0
+    - torchaudio==2.1.0
+    - chatterbox-tts==0.1.1
+    - ml_dtypes
+    - huggingface_hub
+    - safetensors
+    - numpy
+  system_packages:
+    - ffmpeg
+    - libsndfile1
+
+image: r8.im/hanif-imaduddin/chatterbox-tts-indonesian
+
+predict: "predict.py:Predictor"
