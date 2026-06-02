@@ -1,0 +1,27 @@
+name: Deploy to Replicate
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:   # bisa juga trigger manual dari GitHub UI
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Cog
+        run: |
+          sudo curl -o /usr/local/bin/cog -L \
+            https://github.com/replicate/cog/releases/latest/download/cog_Linux_x86_64
+          sudo chmod +x /usr/local/bin/cog
+          cog --version
+
+      - name: Login ke Replicate
+        run: echo ${{ secrets.REPLICATE_API_TOKEN }} | cog login --token-stdin
+
+      - name: Push model ke Replicate
+        run: cog push r8.im/hanif-imaduddin/chatterbox-tts-indonesian
